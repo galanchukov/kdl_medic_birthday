@@ -1,0 +1,202 @@
+[
+  {
+    "id": 1,
+    "name": "Иванова Мария Петровна",
+    "department": "Хирургия",
+    "position": "Главный хирург",
+    "birthday": "1978-04-23",
+    "phone": "+7 701 123-45-67",
+    "email": "ivanova@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 2,
+    "name": "Петров Александр Сергеевич",
+    "department": "Кардиология",
+    "position": "Кардиолог",
+    "birthday": "1982-05-10",
+    "phone": "+7 702 234-56-78",
+    "email": "petrov@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 3,
+    "name": "Сидорова Наталья Владимировна",
+    "department": "Акушерство и гинекология",
+    "position": "Врач-гинеколог",
+    "birthday": "1990-01-15",
+    "phone": "+7 705 345-67-89",
+    "email": "sidorova@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 4,
+    "name": "Кузнецов Дмитрий Анатольевич",
+    "department": "Неврология",
+    "position": "Невролог",
+    "birthday": "1975-07-22",
+    "phone": "+7 707 456-78-90",
+    "email": "kuznetsov@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 5,
+    "name": "Смирнова Елена Ивановна",
+    "department": "Педиатрия",
+    "position": "Педиатр",
+    "birthday": "1988-11-03",
+    "phone": "+7 708 567-89-01",
+    "email": "smirnova@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 6,
+    "name": "Козлов Виктор Николаевич",
+    "department": "Травматология",
+    "position": "Травматолог-ортопед",
+    "birthday": "1970-08-19",
+    "phone": "+7 700 678-90-12",
+    "email": "kozlov@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 7,
+    "name": "Новикова Ольга Михайловна",
+    "department": "Офтальмология",
+    "position": "Офтальмолог",
+    "birthday": "1985-02-28",
+    "phone": "+7 701 789-01-23",
+    "email": "novikova@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 8,
+    "name": "Морозов Игорь Павлович",
+    "department": "Урология",
+    "position": "Уролог",
+    "birthday": "1973-06-14",
+    "phone": "+7 702 890-12-34",
+    "email": "morozov@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 9,
+    "name": "Волкова Татьяна Геннадьевна",
+    "department": "Терапия",
+    "position": "Врач-терапевт",
+    "birthday": "1992-09-07",
+    "phone": "+7 705 901-23-45",
+    "email": "volkova@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 10,
+    "name": "Соколов Андрей Юрьевич",
+    "department": "Анестезиология",
+    "position": "Анестезиолог-реаниматолог",
+    "birthday": "1980-12-25",
+    "phone": "+7 707 012-34-56",
+    "email": "sokolov@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 11,
+    "name": "Лебедева Анастасия Романовна",
+    "department": "Эндокринология",
+    "position": "Эндокринолог",
+    "birthday": "1987-03-08",
+    "phone": "+7 708 123-45-67",
+    "email": "lebedeva@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 12,
+    "name": "Козлова Инна Сергеевна",
+    "department": "Дерматология",
+    "position": "Дерматолог",
+    "birthday": "1993-10-31",
+    "phone": "+7 700 234-56-78",
+    "email": "kozlova@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 13,
+    "name": "Захаров Евгений Константинович",
+    "department": "Онкология",
+    "position": "Онколог",
+    "birthday": "1968-04-01",
+    "phone": "+7 701 345-67-89",
+    "email": "zakharov@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 14,
+    "name": "Орлова Виктория Александровна",
+    "department": "Психиатрия",
+    "position": "Психиатр",
+    "birthday": "1984-07-04",
+    "phone": "+7 702 456-78-90",
+    "email": "orlova@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 15,
+    "name": "Воронов Максим Дмитриевич",
+    "department": "Пульмонология",
+    "position": "Пульмонолог",
+    "birthday": "1979-05-20",
+    "phone": "+7 705 567-89-01",
+    "email": "voronov@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 16,
+    "name": "Григорьева Светлана Олеговна",
+    "department": "Ревматология",
+    "position": "Ревматолог",
+    "birthday": "1991-08-11",
+    "phone": "+7 707 678-90-12",
+    "email": "grigoryeva@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 17,
+    "name": "Федоров Алексей Борисович",
+    "department": "Гастроэнтерология",
+    "position": "Гастроэнтеролог",
+    "birthday": "1976-11-17",
+    "phone": "+7 708 789-01-23",
+    "email": "fedorov@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 18,
+    "name": "Семёнова Диана Валерьевна",
+    "department": "Педиатрия",
+    "position": "Детский невролог",
+    "birthday": "1995-02-14",
+    "phone": "+7 700 890-12-34",
+    "email": "semenova@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 19,
+    "name": "Николаев Сергей Иванович",
+    "department": "Хирургия",
+    "position": "Хирург",
+    "birthday": "1983-09-30",
+    "phone": "+7 701 901-23-45",
+    "email": "nikolaev@clinic.kz",
+    "photo": null
+  },
+  {
+    "id": 20,
+    "name": "Михайлова Юлия Петровна",
+    "department": "Кардиология",
+    "position": "Кардиолог высшей категории",
+    "birthday": "1971-06-05",
+    "phone": "+7 702 012-34-56",
+    "email": "mikhailova@clinic.kz",
+    "photo": null
+  }
+]

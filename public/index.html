@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#5865f2" />
+  <meta name="description" content="Справочник дней рождения врачей клиники" />
+
+  <!-- Telegram WebApp SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Шрифт -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
+  <title>Дни рождения врачей</title>
+</head>
+<body>
+
+  <!-- ── Баннер-напоминание (уведомление о завтрашних ДР) ── -->
+  <div id="notification-banner" class="notification-banner hidden" role="alert" aria-live="polite">
+    <div class="notification-banner__icon">🎂</div>
+    <div class="notification-banner__text"></div>
+    <button
+      class="notification-banner__close"
+      aria-label="Закрыть уведомление"
+      onclick="closeBanner()"
+    >✕</button>
+  </div>
+
+  <div class="app">
+
+    <!-- ── Шапка ───────────────────────────────────────────── -->
+    <header class="header" role="banner">
+      <div class="header__content">
+        <h1 class="header__title">🏥 Дни рождения</h1>
+        <p class="header__subtitle">Справочник врачей клиники</p>
+      </div>
+      <button
+        id="notify-btn"
+        class="notify-btn"
+        aria-label="Включить push-уведомления"
+        title="Включить уведомления о днях рождения"
+      >🔕</button>
+    </header>
+
+    <!-- ── Поиск и фильтры ─────────────────────────────────── -->
+    <section class="controls" aria-label="Поиск и фильтры">
+      <div class="search-wrapper">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="search"
+          id="search-input"
+          class="search-input"
+          placeholder="Поиск по имени, отделению..."
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          aria-label="Поиск врача"
+        />
+        <button
+          id="clear-search"
+          class="clear-search hidden"
+          aria-label="Очистить поиск"
+        >✕</button>
+      </div>
+      <div class="filters">
+        <select id="dept-filter" class="dept-filter" aria-label="Фильтр по отделению">
+          <option value="">Все отделения</option>
+        </select>
+        <select id="sort-select" class="sort-select" aria-label="Сортировка">
+          <option value="birthday">По дню рождения</option>
+          <option value="name">По имени</option>
+          <option value="dept">По отделению</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- ── Вкладки ─────────────────────────────────────────── -->
+    <nav class="tabs" role="tablist" aria-label="Фильтр врачей">
+      <button class="tab active" data-tab="all"      role="tab" aria-selected="true">Все врачи</button>
+      <button class="tab"        data-tab="upcoming" role="tab" aria-selected="false">Ближайшие 30 дней</button>
+      <button class="tab"        data-tab="today"    role="tab" aria-selected="false">Сегодня 🎉</button>
+    </nav>
+
+    <!-- ── Статистика ──────────────────────────────────────── -->
+    <div id="stats-bar" class="stats-bar" aria-live="polite"></div>
+
+    <!-- ── Список врачей ───────────────────────────────────── -->
+    <main id="doctors-list" class="doctors-list" role="main" aria-label="Список врачей">
+      <div class="loading" aria-label="Загрузка данных">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Загрузка данных...</p>
+      </div>
+    </main>
+
+    <!-- ── Пустое состояние ────────────────────────────────── -->
+    <div id="empty-state" class="empty-state hidden" role="status" aria-live="polite">
+      <div class="empty-state__icon" aria-hidden="true">🔎</div>
+      <p>Врачи не найдены</p>
+    </div>
+
+  </div><!-- /.app -->
+
+  <!-- ── Модальное окно карточки врача ──────────────────────── -->
+  <div
+    id="doctor-modal"
+    class="modal hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-doctor-name"
+  >
+    <div class="modal__overlay" onclick="closeModal()" aria-hidden="true"></div>
+    <div class="modal__content">
+      <button
+        class="modal__close"
+        onclick="closeModal()"
+        aria-label="Закрыть карточку врача"
+      >✕</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

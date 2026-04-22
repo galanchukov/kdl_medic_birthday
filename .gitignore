@@ -1,0 +1,22 @@
+# Системные файлы Windows
+Thumbs.db
+Desktop.ini
+*.xlsx
+*.xls
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Firebase
+.firebase/
+firebase-debug.log
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS
+.DS_Store
