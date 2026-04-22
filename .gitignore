@@ -4,6 +4,10 @@ Desktop.ini
 *.xlsx
 *.xls
 
+# Приватные ключи Firebase (service account)
+*-firebase-adminsdk-*.json
+kdl-medic-birthday-*.json
+
 # Node
 node_modules/
 npm-debug.log*
