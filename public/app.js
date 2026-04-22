@@ -359,14 +359,14 @@ function applyFilters() {
     });
   }
 
-  // Поиск
+  // Поиск (имя + специальность + клиника)
   if (state.search) {
     const q = state.search.toLowerCase();
     list = list.filter(
       (d) =>
         d.name.toLowerCase().includes(q) ||
-        d.department.toLowerCase().includes(q) ||
-        d.position.toLowerCase().includes(q)
+        (d.department && d.department.toLowerCase().includes(q)) ||
+        (d.clinic && d.clinic.toLowerCase().includes(q))
     );
   }
 
@@ -418,7 +418,7 @@ function renderDoctorCard(doctor) {
       <div class="doctor-info">
         <div class="doctor-name">${doctor.name}</div>
         <div class="doctor-dept">${doctor.department}</div>
-        <div class="doctor-position">${doctor.position}</div>
+        <div class="doctor-position">${doctor.clinic || ''}</div>
       </div>
       <div class="doctor-bd">
         <span class="birthday-date">🎂 ${shortDate}</span>
@@ -456,14 +456,15 @@ function renderStats(list) {
   DOM.statsBar.innerHTML = parts.join('');
 }
 
-/* ── Отделения: заполнение dropdown ─────────────────────────── */
+/* ── Специальности: заполнение dropdown ─────────────────────── */
 function populateDepartments() {
-  const depts = [...new Set(state.doctors.map((d) => d.department))].sort((a, b) =>
-    a.localeCompare(b, 'ru')
-  );
+  const depts = [...new Set(
+    state.doctors.map((d) => d.department).filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b, 'ru'));
+
   if (!DOM.deptFilter) return;
   DOM.deptFilter.innerHTML =
-    `<option value="">Все отделения</option>` +
+    `<option value="">Все специальности</option>` +
     depts.map((dep) => `<option value="${dep}">${dep}</option>`).join('');
 
   // Восстанавливаем последний выбор
@@ -495,7 +496,7 @@ window.openModal = function (id) {
     <div class="modal-avatar">${initials}</div>
     <div class="modal-name">${doctor.name}</div>
     <div class="modal-dept">${doctor.department}</div>
-    <div class="modal-position">${doctor.position}</div>
+    ${doctor.clinic ? `<div class="modal-position">🏥 ${doctor.clinic}</div>` : ''}
     <div class="modal-birthday-block">
       <div class="modal-birthday-icon">🎂</div>
       <div class="modal-birthday-info">
@@ -513,6 +514,7 @@ window.openModal = function (id) {
       <a class="modal-email-btn" href="mailto:${doctor.email}">
         ✉️ &nbsp;${doctor.email}
       </a>` : ''}
+    ${doctor.code ? `<div style="text-align:center;margin-top:12px;font-size:11px;color:var(--text-muted)">Код врача: ${doctor.code}</div>` : ''}
   `;
 
   DOM.doctorModal.classList.remove('hidden');
