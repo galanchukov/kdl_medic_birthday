@@ -382,6 +382,8 @@ function applyFilters() {
     list.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
   } else if (state.sort === 'dept') {
     list.sort((a, b) => a.department.localeCompare(b.department, 'ru') || a.name.localeCompare(b.name, 'ru'));
+  } else if (state.sort === 'clinic') {
+    list.sort((a, b) => (a.clinic || '').localeCompare(b.clinic || '', 'ru') || a.name.localeCompare(b.name, 'ru'));
   }
 
   state.filtered = list;
