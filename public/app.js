@@ -19,6 +19,7 @@ const state = {
   activeTab: 'all',
   search: '',
   department: '',
+  clinic: '',
   sort: 'birthday',
   selectedDoctor: null,
 };
@@ -30,6 +31,7 @@ const DOM = {
   searchInput:   $('search-input'),
   clearSearch:   $('clear-search'),
   deptFilter:    $('dept-filter'),
+  clinicFilter:  $('clinic-filter'),
   sortSelect:    $('sort-select'),
   doctorsList:   $('doctors-list'),
   emptyState:    $('empty-state'),
@@ -375,6 +377,11 @@ function applyFilters() {
     list = list.filter((d) => d.department === state.department);
   }
 
+  // Клиника
+  if (state.clinic) {
+    list = list.filter((d) => d.clinic === state.clinic);
+  }
+
   // Сортировка
   if (state.sort === 'birthday') {
     list.sort((a, b) => daysUntilBirthday(a.birthday) - daysUntilBirthday(b.birthday));
@@ -477,6 +484,25 @@ function populateDepartments() {
   }
 }
 
+/* ── Клиники: заполнение dropdown ─────────────────────────────── */
+function populateClinics() {
+  const clinics = [...new Set(
+    state.doctors.map((d) => d.clinic).filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b, 'ru'));
+
+  if (!DOM.clinicFilter) return;
+  DOM.clinicFilter.innerHTML =
+    `<option value="">Все клиники</option>` +
+    clinics.map((c) => `<option value="${c}">${c}</option>`).join('');
+
+  // Восстанавливаем последний выбор
+  const saved = loadFromStorage('kdl_clinic', '');
+  if (saved && clinics.includes(saved)) {
+    DOM.clinicFilter.value = saved;
+    state.clinic = saved;
+  }
+}
+
 /* ── Модальное окно карточки врача ──────────────────────────── */
 window.openModal = function (id) {
   const doctor = state.doctors.find((d) => d.id === id);
@@ -555,6 +581,13 @@ function bindEvents() {
     renderList();
   });
 
+  // Фильтр клиник
+  DOM.clinicFilter?.addEventListener('change', (e) => {
+    state.clinic = e.target.value;
+    saveToStorage('kdl_clinic', state.clinic);
+    renderList();
+  });
+
   // Сортировка
   DOM.sortSelect?.addEventListener('change', (e) => {
     state.sort = e.target.value;
@@ -599,6 +632,7 @@ async function init() {
 
   // 5. Строим UI
   populateDepartments();
+  populateClinics();
   renderList();
 
   // 6. Привязываем события
