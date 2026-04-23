@@ -223,7 +223,7 @@ body::before {
 
 /* Filters row */
 .filters { display: flex; gap: 8px; }
-.dept-filter, .sort-select {
+.clinic-filter, .dept-filter, .sort-select {
   flex: 1;
   padding: 9px 12px;
   border-radius: var(--radius-sm);
@@ -242,7 +242,7 @@ body::before {
   background-position: right 10px center;
   padding-right: 28px;
 }
-.dept-filter:focus, .sort-select:focus {
+.clinic-filter:focus, .dept-filter:focus, .sort-select:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
