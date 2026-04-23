@@ -89,7 +89,7 @@ function nextAge(dateStr) {
     today.getMonth() > bd.getMonth() ||
     (today.getMonth() === bd.getMonth() && today.getDate() >= bd.getDate());
   // Возраст, который исполнится на ближайший ДР
-  return hasHadBdThisYear ? baseAge : baseAge;
+  return hasHadBdThisYear ? baseAge + 1 : baseAge;
 }
 
 /**
@@ -359,6 +359,11 @@ function applyFilters() {
       const days = daysUntilBirthday(d.birthday);
       return days >= 0 && days <= 30;
     });
+  } else if (state.activeTab === 'jubilee') {
+    list = list.filter((d) => {
+      const age = nextAge(d.birthday);
+      return age > 0 && age % 5 === 0;
+    });
   }
 
   // Поиск (имя + специальность + клиника)
@@ -410,11 +415,14 @@ function getBadge(days) {
 function renderDoctorCard(doctor) {
   const days = daysUntilBirthday(doctor.birthday);
   const bd = new Date(doctor.birthday + 'T00:00:00');
+  const age = nextAge(doctor.birthday);
+  const isJub = age > 0 && age % 5 === 0;
   const shortDate = `${bd.getDate().toString().padStart(2, '0')}.${(bd.getMonth() + 1).toString().padStart(2, '0')}`;
 
   let cardClass = 'doctor-card';
   if (days === 0) cardClass += ' birthday-today';
   else if (days <= 7) cardClass += ' birthday-soon';
+  if (isJub) cardClass += ' is-jubilee';
 
   const initials = getInitials(doctor.name);
 
@@ -427,7 +435,7 @@ function renderDoctorCard(doctor) {
       <div class="doctor-info">
         <div class="doctor-name">${doctor.name}</div>
         <div class="doctor-dept">${doctor.department}</div>
-        <div class="doctor-position">${doctor.clinic || ''}</div>
+        <div class="doctor-position">${doctor.clinic || ''} ${isJub ? `<span class="jubilee-chip">👑 Юбилей ${age} лет</span>` : ''}</div>
       </div>
       <div class="doctor-bd">
         <span class="birthday-date">🎂 ${shortDate}</span>

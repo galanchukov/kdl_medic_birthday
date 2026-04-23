@@ -404,6 +404,23 @@ body::before {
   50% { opacity: 0.85; transform: scale(0.97); }
 }
 
+.doctor-card.is-jubilee {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: linear-gradient(to right, rgba(245, 158, 11, 0.05), transparent);
+}
+.jubilee-chip {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 6px;
+  vertical-align: middle;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
+}
+
 /* ── Loading ───────────────────────────────────────────────── */
 .loading {
   display: flex;
