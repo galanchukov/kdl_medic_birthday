@@ -1,6 +1,6 @@
 /* ============================================================
    APP.JS — Telegram Mini App: Дни рождения врачей
-   Версия: 1.0.0 | Без бэкенда | Service Worker уведомления
+   Версия: 1.0.1 | Без бэкенда | Service Worker уведомления
    ============================================================ */
 
 'use strict';
@@ -101,6 +101,27 @@ function getInitials(fullName) {
   const parts = fullName.trim().split(' ');
   if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
   return parts[0][0].toUpperCase();
+}
+
+/**
+ * Определяет знак зодиака
+ */
+function getZodiac(dateStr) {
+  const bd = new Date(dateStr + 'T00:00:00');
+  const day = bd.getDate();
+  const month = bd.getMonth() + 1;
+  if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) return { s: 'Водолей', i: '♒' };
+  if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) return { s: 'Рыбы', i: '♓' };
+  if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) return { s: 'Овен', i: '♈' };
+  if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) return { s: 'Телец', i: '♉' };
+  if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) return { s: 'Близнецы', i: '♊' };
+  if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) return { s: 'Рак', i: '♋' };
+  if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) return { s: 'Лев', i: '♌' };
+  if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) return { s: 'Дева', i: '♍' };
+  if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) return { s: 'Весы', i: '♎' };
+  if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) return { s: 'Скорпион', i: '♏' };
+  if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) return { s: 'Стрелец', i: '♐' };
+  return { s: 'Козерог', i: '♑' };
 }
 
 /**
@@ -434,7 +455,7 @@ function renderDoctorCard(doctor) {
       }</div>
       <div class="doctor-info">
         <div class="doctor-name">${doctor.name}</div>
-        <div class="doctor-dept">${doctor.department}</div>
+        <div class="doctor-dept">${doctor.department} · ${getZodiac(doctor.birthday).i}</div>
         <div class="doctor-position">${doctor.clinic || ''} ${isJub ? `<span class="jubilee-chip">👑 Юбилей ${age} лет</span>` : ''}</div>
       </div>
       <div class="doctor-bd">
@@ -519,7 +540,7 @@ window.openModal = function (id) {
 
   const days = daysUntilBirthday(doctor.birthday);
   const age  = nextAge(doctor.birthday);
-  const bd   = new Date(doctor.birthday + 'T00:00:00');
+  const zodiac = getZodiac(doctor.birthday);
 
   let bdLabel = '';
   if (days === 0) bdLabel = '<span class="modal-age-chip">🎉 Сегодня!</span>';
@@ -527,11 +548,13 @@ window.openModal = function (id) {
   else bdLabel = `<span class="modal-age-chip">через ${days} дн.</span>`;
 
   const initials = getInitials(doctor.name);
+  const cleanPhone = doctor.phone ? doctor.phone.replace(/\D/g, '') : '';
+  const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent('С днем рождения!')}`;
 
   DOM.modalBody.innerHTML = `
     <div class="modal-avatar">${initials}</div>
     <div class="modal-name">${doctor.name}</div>
-    <div class="modal-dept">${doctor.department}</div>
+    <div class="modal-dept">${doctor.department} <br> <span style="font-size: 11px; opacity: 0.8">${zodiac.i} ${zodiac.s}</span></div>
     ${doctor.clinic ? `<div class="modal-position">🏥 ${doctor.clinic}</div>` : ''}
     <div class="modal-birthday-block">
       <div class="modal-birthday-icon">🎂</div>
@@ -543,9 +566,14 @@ window.openModal = function (id) {
       </div>
     </div>
     ${doctor.phone ? `
-      <a class="modal-contact-btn" href="tel:${doctor.phone}">
-        📞 &nbsp;${doctor.phone}
-      </a>` : ''}
+      <div style="display: flex; gap: 8px; margin-top: 10px;">
+        <a class="modal-contact-btn" href="tel:${doctor.phone}" style="flex:1">
+          📞 Позвонить
+        </a>
+        <a class="modal-contact-btn" href="${waUrl}" target="_blank" style="flex:1; background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);">
+          💬 WhatsApp
+        </a>
+      </div>` : ''}
     ${doctor.email ? `
       <a class="modal-email-btn" href="mailto:${doctor.email}">
         ✉️ &nbsp;${doctor.email}
@@ -643,7 +671,35 @@ async function init() {
   populateClinics();
   renderList();
 
-  // 6. Привязываем события
+  // 6. Праздничный эффект
+  const todayCount = state.doctors.filter(d => daysUntilBirthday(d.birthday) === 0).length;
+  if (todayCount > 0) {
+    const duration = 3 * 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: ['#5865f2', '#f59e0b', '#ef4444']
+      });
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: ['#5865f2', '#f59e0b', '#ef4444']
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    }());
+  }
+
+  // 7. Привязываем события
   bindEvents();
 
   // 7. Обновляем кнопку уведомлений
