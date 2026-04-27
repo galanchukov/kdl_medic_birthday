@@ -5,7 +5,7 @@ const path = require('path');
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
-const doctorsJsonPath = path.join(__dirname, '../../public/doctors.json');
+const doctorsJsonPath = path.join(__dirname, '../doctors.json');
 
 async function main() {
   console.log('🔄 Starting migration from doctors.json to Database...');
