@@ -1,16 +1,18 @@
 # 🏥 Дни рождения врачей — Telegram Mini App
 
-Telegram Mini App без бэкенда. Данные хранятся в статичном `doctors.json`.
+Telegram Mini App с бэкендом на Node.js (Express + PostgreSQL). 
+База данных и бот развернуты на VPS через Docker.
 
 ## Стек
 
 | Слой | Технология |
 |---|---|
 | Frontend | HTML5 + Vanilla JS + CSS (Glassmorphism) |
-| Данные | `public/doctors.json` (статичный файл) |
-| Уведомления | Web Notifications API + Service Worker |
-| Хостинг | Firebase Hosting |
-| CI/CD | GitHub Actions |
+| Backend | Node.js + Express + Prisma ORM |
+| Database | PostgreSQL |
+| Bot | Telegraf.js (с ежедневными уведомлениями) |
+| Hosting | Firebase (Frontend) + VPS (Backend) |
+| CI/CD | GitHub Actions + Docker |
 
 ## Особенности (Features)
 - 🏥 **Фильтрация по клиникам**: Быстрый выбор врачей конкретного филиала.
@@ -130,11 +132,40 @@ git push origin main
 | Разрешение получено | Отправляем системное уведомление (через SW) |
 | Уведомление уже было | `localStorage` помнит, не дублируем |
 
-### Ограничение без бэкенда
+### Бэкенд
+Благодаря переходу на VPS, уведомления теперь приходят автоматически в Telegram через бота, даже если приложение закрыто.
 
-Уведомления работают **только при открытии приложения**. Для уведомлений в фоне (пока приложение закрыто) нужен бэкенд (Firebase Cloud Functions + FCM).
+## Деплой бэкенда на VPS
 
-## Локальный запуск
+### 1. Подготовка сервера (Ubuntu 24.04)
+Сервер должен иметь чистую ОС.
+
+### 2. Загрузка файлов
+Загрузи папку `server`, `docker-compose.yml` и `setup_vps.sh` на сервер в папку `/root/kdl_bd`.
+
+### 3. Настройка переменных
+Создай файл `server/.env` на сервере:
+```env
+DATABASE_URL="postgresql://kdl_user:kdl_password@db:5432/kdl_bd?schema=public"
+BOT_TOKEN="ТВОЙ_ТОКЕН_ОТ_BOTFATHER"
+```
+
+### 4. Запуск
+Выполни скрипт настройки:
+```bash
+chmod +x setup_vps.sh
+./setup_vps.sh
+```
+
+### 5. Миграция данных (из JSON в Базу)
+После запуска контейнеров, выполни миграцию (разово):
+```bash
+docker compose exec api node src/migrate.js
+```
+
+Теперь база данных заполнена, а бот и API работают на порту 3000.
+
+## Локальный запуск (Frontend)
 
 ```bash
 # Установить firebase-tools

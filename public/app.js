@@ -10,7 +10,7 @@ const STORAGE_KEY_FILTER  = 'kdl_bd_dept_filter';
 const STORAGE_KEY_SORT    = 'kdl_bd_sort';
 const STORAGE_KEY_NOTIF   = 'kdl_bd_notified'; // JSON: { "YYYY": [doctorId, ...] }
 const STORAGE_KEY_PERM    = 'kdl_bd_notif_perm'; // 'granted' | 'denied' | null
-const DOCTORS_URL          = './doctors.json';
+const DOCTORS_URL = 'http://193.106.196.11:3000/api/doctors'; // Путь к API на VPS
 
 /* ── Состояние приложения ───────────────────────────────────── */
 const state = {

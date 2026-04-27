@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: kdl_user
+      POSTGRES_PASSWORD: kdl_password
+      POSTGRES_DB: kdl_bd
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  api:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    command: sh -c "npx prisma migrate dev && node src/index.js"
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://kdl_user:kdl_password@db:5432/kdl_bd?schema=public
+      PORT: 3000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  bot:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    command: node src/bot.js
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://kdl_user:kdl_password@db:5432/kdl_bd?schema=public
+      BOT_TOKEN: ${BOT_TOKEN}
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
