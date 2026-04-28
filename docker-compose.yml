@@ -15,7 +15,7 @@ services:
     build: 
       context: ./server
       dockerfile: Dockerfile
-    command: sh -c "npx prisma migrate dev && node src/index.js"
+    command: sh -c "npx prisma db push --accept-data-loss && node src/index.js"
     restart: always
     environment:
       DATABASE_URL: postgresql://kdl_user:kdl_password@db:5432/kdl_bd?schema=public
