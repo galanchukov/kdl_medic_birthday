@@ -44,7 +44,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./server/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./server/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./public:/usr/share/nginx/html:ro
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
