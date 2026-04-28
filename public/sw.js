@@ -3,7 +3,7 @@
    Стратегия: Cache-First для статики + уведомления
    ============================================================ */
 
-const CACHE_NAME = 'kdl-bd-v1';
+const CACHE_NAME = 'kdl-bd-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
